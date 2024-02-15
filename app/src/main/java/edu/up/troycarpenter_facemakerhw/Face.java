@@ -1,5 +1,7 @@
 package edu.up.troycarpenter_facemakerhw;
 
+/**@Author Troy Carpenter */
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
