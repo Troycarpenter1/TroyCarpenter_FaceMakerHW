@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">FaceMaker</string>
+    <string name="skin">Skin</string>
+    <string name="eyes">Eyes</string>
+    <string name="hair">Hair</string>
+    <string name="random_face">Random Face</string>
+    <string name="hair_selection">Hair selection</string>
+    <string name="feature_selection">Feature selection</string>
+
+    <string-array name="hair_choices">
+        <item>Bowl Cut</item>
+        <item>Mohawk</item>
+        <item>Afro</item>
+        <item>Pig Tails</item>
+    </string-array>
+</resources>
