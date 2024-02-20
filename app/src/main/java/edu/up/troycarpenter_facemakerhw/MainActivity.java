@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
         //puts everything in the spinner
         hairSpin.setAdapter(setUp);
+
+
+
     }
 
 }
