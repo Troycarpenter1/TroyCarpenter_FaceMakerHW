@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
         hairSpin.setAdapter(setUp);
 
 
+
+        Face nicholasCage=new Face(this);
+        SeekBar red=findViewById(R.id.redController);
+        SeekBar green=findViewById(R.id.greenController);
+        SeekBar blue=findViewById(R.id.blueController);
+
+        red.setOnSeekBarChangeListener(nicholasCage);
 
     }
 
