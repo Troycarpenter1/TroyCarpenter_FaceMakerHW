@@ -1,11 +1,14 @@
 package edu.up.troycarpenter_facemakerhw;
 
-/**@Author Troy Carpenter */
+/**
+ * @Author Troy Carpenter
+ */
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 
@@ -25,10 +28,10 @@ public class MainActivity extends AppCompatActivity {
          Solution: I modified some example code from the documentation
          */
         //defines the spinner we want to populate
-        Spinner hairSpin=(Spinner)findViewById(R.id.hairSelector);
+        Spinner hairSpin = (Spinner) findViewById(R.id.hairSelector);
 
         //creates a charsequence using a string array resource
-        ArrayAdapter<CharSequence> setUp= ArrayAdapter.createFromResource(
+        ArrayAdapter<CharSequence> setUp = ArrayAdapter.createFromResource(
                 this, R.array.hair_choices, android.R.layout.simple_spinner_item);
 
         //sets how the arrayadapter will display
@@ -38,12 +41,15 @@ public class MainActivity extends AppCompatActivity {
         hairSpin.setAdapter(setUp);
 
 
+        Face nicholasCage = new Face(this);
 
-        Face nicholasCage=new Face(this);
-        SeekBar red=findViewById(R.id.redController);
-        SeekBar green=findViewById(R.id.greenController);
-        SeekBar blue=findViewById(R.id.blueController);
+        SeekBar red = findViewById(R.id.redController);
+        SeekBar green = findViewById(R.id.greenController);
+        SeekBar blue = findViewById(R.id.blueController);
 
+        RadioGroup select = findViewById(R.id.radioButton);
+
+        select.setOnCheckedChangeListener(nicholasCage);
         red.setOnSeekBarChangeListener(nicholasCage);
 
     }

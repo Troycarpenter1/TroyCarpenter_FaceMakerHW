@@ -9,25 +9,33 @@ import static java.lang.Long.parseLong;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
 import android.view.SurfaceView;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 
+import java.text.ParseException;
 import java.util.Random;
 
-public class Face extends SurfaceView implements SeekBar.OnSeekBarChangeListener {
+public class Face extends SurfaceView implements SeekBar.OnSeekBarChangeListener, RadioGroup.OnCheckedChangeListener {
+
+    //instance variable for what color is being edited 1-3 for skin, eyes, hair
+    public int selection;
 
     //instance variable for skin
     Paint skinColor = new Paint();
     public int skinRedColor;
     public int skinGreenColor;
     public int skinBlueColor;
+
     //instance variables for eyes
     Paint eyeColor = new Paint();
     public int eyeRedColor;
     public int eyeGreenColor;
     public int eyeBlueColor;
+
     //instance variables for hair
     Paint hairColor = new Paint();
     public int hairRedColor;
@@ -49,24 +57,44 @@ public class Face extends SurfaceView implements SeekBar.OnSeekBarChangeListener
         skinRedColor = rand.nextInt(255);
         skinGreenColor = rand.nextInt(255);
         skinBlueColor = rand.nextInt(255);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            skinColor.setColor(coloration(1));
+
+        String skinHex = getColor(skinRedColor, skinGreenColor, skinBlueColor);
+        try {
+            //skinColor.setColor(parseInt(skinHex, 16));
+            skinColor.setColor(Integer.valueOf(skinHex));
         }
+        catch(NumberFormatException nfe) {
+            skinColor.setColor(Color.RED);
+        }
+
         //randomizes eyes
         eyeRedColor = rand.nextInt(255);
         eyeGreenColor = rand.nextInt(255);
         eyeBlueColor = rand.nextInt(255);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            eyeColor.setColor(coloration(2));
-        }
+        String eyeHex = getColor(eyeRedColor, eyeGreenColor, eyeBlueColor);
+        eyeColor.setColor(parseInt(eyeHex,16));
+
         //randomizes hair
         hairRedColor = rand.nextInt(255);
         hairGreenColor = rand.nextInt(255);
         hairBlueColor = rand.nextInt(255);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            hairColor.setColor(coloration(3));
-        }
+        String hairHex = getColor(hairRedColor, hairGreenColor, hairBlueColor);
+        hairColor.setColor(parseInt(hairHex,16));
         hairStyle = rand.nextInt(4);
+    }
+
+    //returns the hex of an rgb
+    public String getColor(int r, int g, int b) {
+        /**
+         External Citation
+         Date: 22 February 2024
+         Problem: struggled finding a way to convert numbers into hex
+         Resource:
+         https://stackoverflow.com/questions/52148457/convert-rgb-color-to-hex-color
+         Solution: I used the example code from this post with my own variables
+         */
+        String rgb= String.format("%02x%02x%02x%02x",255, r, g, b);
+        return rgb;
     }
 
     //draws a face using instance variables
@@ -90,38 +118,6 @@ public class Face extends SurfaceView implements SeekBar.OnSeekBarChangeListener
         c.drawCircle(50, 50, 50, skinColor);
     }
 
-    public long coloration(int ind) {
-        /**
-         External Citation
-         Date: 21 February 2024
-         Problem: struggled finding a way to convert numbers into hex
-         Resource:
-         https://www.baeldung.com/java-convert-int-to-hex
-         Solution: I used the example code from this post with my own variables
-         */
-        if(ind==1) {
-            String redHex = String.format("%02x", skinRedColor);
-            String greenHex = String.format("%02x", skinGreenColor);
-            String blueHex = String.format("%02x", skinBlueColor);
-            String color = "" + redHex + greenHex + blueHex;
-            long col = parseLong(color);
-            return col;
-        } else if (ind==2) {
-            String redHex = String.format("%02x", eyeRedColor);
-            String greenHex = String.format("%02x", eyeGreenColor);
-            String blueHex = String.format("%02x", eyeBlueColor);
-            String color = "" + redHex + greenHex + blueHex;
-            long col = parseLong(color);
-            return col;
-        } else {
-            String redHex = String.format("%02x", hairRedColor);
-            String greenHex = String.format("%02x", hairGreenColor);
-            String blueHex = String.format("%02x", hairBlueColor);
-            String color = "" + redHex + greenHex + blueHex;
-            long col = parseLong(color);
-            return col;
-        }
-    }
 
     SeekBar red = findViewById(R.id.redController);
     SeekBar green = findViewById(R.id.greenController);
@@ -134,18 +130,31 @@ public class Face extends SurfaceView implements SeekBar.OnSeekBarChangeListener
     @Override
     //summon radio button if statement on the morroww
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (seekBar.getId() == red.getId()) {
-            this.redColor = progress;
-        } else if (seekBar.getId() == green.getId()) {
-            this.greenColor = progress;
-        } else {
-            this.blueColor = progress;
+        if(selection==1) {
+            if (seekBar.getId() == red.getId()) {
+                this.skinRedColor = progress;
+            } else if (seekBar.getId() == green.getId()) {
+                this.skinGreenColor = progress;
+            } else {
+                this.skinBlueColor = progress;
+            }
         }
     }
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {/**not used*/}
-
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {/**not used*/}
+
+    //sets what color is being changed via an integer corresponding to the choices
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if(checkedId==R.id.skinToggle){
+            selection=1;
+        } else if (checkedId==R.id.hairToggle) {
+            selection=2;
+        } else if (checkedId==R.id.eyeToggle) {
+            selection=3;
+        }
+    }
 }
