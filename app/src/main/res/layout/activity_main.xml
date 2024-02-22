@@ -6,7 +6,7 @@
 
 
 
-    <SurfaceView
+    <edu.up.troycarpenter_facemakerhw.Face
         android:id="@+id/faceDisplay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

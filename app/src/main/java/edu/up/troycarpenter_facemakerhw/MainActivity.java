@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -40,17 +41,30 @@ public class MainActivity extends AppCompatActivity {
         //puts everything in the spinner
         hairSpin.setAdapter(setUp);
 
-
-        Face nicholasCage = new Face(this);
+        Face nicholasCage = findViewById(R.id.faceDisplay);
 
         SeekBar red = findViewById(R.id.redController);
         SeekBar green = findViewById(R.id.greenController);
         SeekBar blue = findViewById(R.id.blueController);
 
+        Button rando=findViewById(R.id.button);
+
         RadioGroup select = findViewById(R.id.radioButton);
 
+        //specifies which characteristic user is trying to change
         select.setOnCheckedChangeListener(nicholasCage);
+
+        //sets up the color selectors to choose r g and b values
         red.setOnSeekBarChangeListener(nicholasCage);
+        green.setOnSeekBarChangeListener(nicholasCage);
+        blue.setOnSeekBarChangeListener(nicholasCage);
+
+
+        //randomizer button
+        rando.setOnClickListener(nicholasCage);
+
+        //sets up to recieve input from the spinner for hair style
+        hairSpin.setOnItemSelectedListener(nicholasCage);
 
     }
 
