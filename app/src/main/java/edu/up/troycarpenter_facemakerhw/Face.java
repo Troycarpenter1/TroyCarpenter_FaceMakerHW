@@ -50,11 +50,12 @@ public class Face extends SurfaceView implements SeekBar.OnSeekBarChangeListener
     public int hairBlueColor;
     public int hairStyle;
 
+
     public Face(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.randomize();
         setWillNotDraw(false);
-        
+
     }
 
     //randomizes instance variables to make a random face
@@ -241,12 +242,40 @@ public class Face extends SurfaceView implements SeekBar.OnSeekBarChangeListener
     //sets what color is being changed via an integer corresponding to the choices
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
+        MainActivity myApp=(MainActivity)getContext();
         if (checkedId == R.id.skinToggle) {
             this.selection = 3;
+            //sets the seekbars to the skin values
+            SeekBar seekRed=myApp.findViewById(R.id.redController);
+            seekRed.setProgress(skinRedColor);
+            SeekBar seekGreen=myApp.findViewById(R.id.greenController);
+            seekGreen.setProgress(skinGreenColor);
+            SeekBar seekBlue=myApp.findViewById(R.id.blueController);
+            seekBlue.setProgress(skinBlueColor);
         } else if (checkedId == R.id.hairToggle) {
             this.selection = 1;
+            //sets seekbars to hair values
+            SeekBar seekRed=myApp.findViewById(R.id.redController);
+            seekRed.setProgress(hairRedColor);
+            SeekBar seekGreen=myApp.findViewById(R.id.greenController);
+            seekGreen.setProgress(hairGreenColor);
+            SeekBar seekBlue=myApp.findViewById(R.id.blueController);
+            seekBlue.setProgress(hairBlueColor);
         } else if (checkedId == R.id.eyeToggle) {
             this.selection = 2;
+            //sets seekbars to eye values
+            SeekBar seekRed=myApp.findViewById(R.id.redController);
+            seekRed.setProgress(eyeRedColor);
+            SeekBar seekGreen=myApp.findViewById(R.id.greenController);
+            seekGreen.setProgress(eyeGreenColor);
+            SeekBar seekBlue=myApp.findViewById(R.id.blueController);
+            seekBlue.setProgress(eyeBlueColor);
+        }
+    }
+    public void seekSet(){
+        if(selection==3) {
+            SeekBar skinRed = findViewById(R.id.redController);
+            skinRed.setProgress(skinRedColor);
         }
     }
 

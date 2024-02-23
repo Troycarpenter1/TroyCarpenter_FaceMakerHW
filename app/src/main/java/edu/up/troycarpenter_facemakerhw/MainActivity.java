@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         SeekBar green = findViewById(R.id.greenController);
         SeekBar blue = findViewById(R.id.blueController);
 
+
         Button rando=findViewById(R.id.button);
 
         RadioGroup select = findViewById(R.id.radioButton);
